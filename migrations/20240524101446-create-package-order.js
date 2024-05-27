@@ -2,35 +2,46 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Users", {
+    await queryInterface.createTable("PackageOrders", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.BIGINT,
       },
-      username: {
+      kidId: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+          model: "KidProfiles",
+          key: "id",
+        },
+      },
+      packageId: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+          model: "Packages",
+          key: "id",
+        },
+      },
+      totalPrice: {
         type: Sequelize.STRING,
       },
-      password: {
+      nameOfAdult: {
         type: Sequelize.STRING,
       },
-      fullName: {
+      nameOfKid: {
+        type: Sequelize.STRING,
+      },
+      phone: {
         type: Sequelize.STRING,
       },
       email: {
         type: Sequelize.STRING,
       },
-      phone: {
+      additionalNotes: {
         type: Sequelize.STRING,
-        unique: true,
-      },
-      address: {
-        type: Sequelize.STRING,
-      },
-      role: {
-        type: Sequelize.ENUM(["ADMIN", "STAFF", "USER"]),
-        defaultValue: "USER",
       },
       status: {
         type: Sequelize.BOOLEAN,
@@ -47,6 +58,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Users");
+    await queryInterface.dropTable("PackageOrders");
   },
 };

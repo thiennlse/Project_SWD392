@@ -2,35 +2,47 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Users", {
+    await queryInterface.createTable("KidProfiles", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.BIGINT,
       },
-      username: {
-        type: Sequelize.STRING,
+      userId: {
+        type: Sequelize.BIGINT,
+        allowNull: false,
+        references: {
+          model: "Users",
+          key: "id",
+        },
       },
-      password: {
-        type: Sequelize.STRING,
-      },
+
       fullName: {
         type: Sequelize.STRING,
       },
-      email: {
+      descriptionHobby: {
+        type: Sequelize.STRING,
+        required: true,
+      },
+      gender: {
+        type: Sequelize.ENUM(["MALE", "FEMALE", "OTHER"]),
+        defaultValue: "MALE",
+      },
+      yob: {
         type: Sequelize.STRING,
       },
-      phone: {
-        type: Sequelize.STRING,
-        unique: true,
-      },
-      address: {
+      color: {
         type: Sequelize.STRING,
       },
-      role: {
-        type: Sequelize.ENUM(["ADMIN", "STAFF", "USER"]),
-        defaultValue: "USER",
+      type: {
+        type: Sequelize.STRING,
+      },
+      material: {
+        type: Sequelize.STRING,
+      },
+      toyOrigin: {
+        type: Sequelize.STRING,
       },
       status: {
         type: Sequelize.BOOLEAN,
@@ -47,6 +59,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Users");
+    await queryInterface.dropTable("KidProfiles");
   },
 };
